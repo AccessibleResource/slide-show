@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ultimate Slideshow Creator – Transform Memories into Stunning Videos</title>
+  <script defer src="js/navigation.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<h2>Start Creating Your Slideshow</h2>
+  <div id="appContainer">
+
+    <!-- Setup Form -->
+    <div id="setup-form">
+
+      <!-- Image Upload Section -->
+      <div class="form-group">
+        <label for="imageUpload" id="initialUploadLabel">Select Your Photos (Supported formats: JPG, PNG, GIF, WebP):</label>
+        <input type="file" id="imageUpload" accept="image/*" multiple required>
+
+        <div id="imageManagementSection" style="display: none;">
+          <h3>Selected Photos (<span id="imageCount">0</span>)</h3>
+          <button type="button" id="addMoreImagesButton">Add More Photos</button>
+          <button type="button" id="removeAllImagesButton" class="danger-button">Remove All Photos</button>
+        </div>
+
+        <div id="imageList" class="image-preview-list">
+          <p class="placeholder-text">No photos selected yet. Please upload your images to begin.</p>
+        </div>
+
+        <p role="alert" id="imageError" class="error-message"></p>
+      </div>
+
+      <!-- Duration Section -->
+      <div name="durationform" class="form-group">
+        <label for="durationSelect">Time Each Photo is Displayed (in seconds):</label>
+        <button id="minousbtn">Decrease Time</button>
+        <input type="number" name="durationinput" id="durationSelect" min="1" max="60" step="0.5" value="3" required>
+        <button id="plusbtn">Increase Time</button>
+        <p aria-live="polite">Total Estimated Video Length: <span id="totalDuration">0</span> seconds <span id="durationWarning" class="warning-message"></span></p>
+      </div>
+
+      <!-- Music Section -->
+      <div class="form-group">
+        <label>Add Background Music (Optional – Supported formats: MP3, WAV, OGG, M4A):</label>
+        <div>
+          <input type="checkbox" id="noMusicCheckbox">
+          <label for="noMusicCheckbox">Make Video Silent (No Background Music)</label>
+        </div>
+
+        <div id="musicUploadSection">
+          <label for="musicUpload">Upload Your Music File:</label>
+          <input type="file" id="musicUpload" accept="audio/*">
+          <div id="musicFileName" class="file-list"></div>
+          <p role="alert" id="audioError" class="error-message"></p>
+
+          <div id="audioOptions" style="display: none; margin-top: 15px; padding-top: 10px; border-top: 1px dashed #eee;">
+            <label for="audioStartTime">Music Start Position (in seconds):</label>
+            <button id="musicminousbtn">Rewind</button>
+            <input type="number" id="audioStartTime" value="0" min="0" step="0.1" disabled>
+            <button id="musicplusbtn">Forward</button>
+
+            <label for="audioFadeTime" style="margin-left: 15px;">Fade In/Out Duration (in seconds):</label>
+            <button id="fademinousbtn">Decrease Fade</button>
+            <input type="number" id="audioFadeTime" value="1" min="0" max="5" step="0.1">
+            <button id="fadeplusbtn">Increase Fade</button>
+
+            <p style="font-size: 0.85em; color: #555;">
+              Uploaded track length: <span id="audioActualDuration">--</span> seconds.
+            </p>
+            <p id="audioInfo" style="font-size: 0.85em; color: #555;">
+              If your music is shorter than the video, it will loop seamlessly. Fade effects are applied at the beginning and end of the track.
+            </p>
+            <p role="alert" id="audioTimeError" class="error-message"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Button -->
+      <button id="createVideoButton" disabled>Generate Slideshow Video</button>
+      <p role="alert" id="generalError" class="error-message"></p>
+    </div>
+
+    <!-- Processing Area -->
+    <div id="processingArea" class="status-area" style="display: none;">
+      <h2><span class="spinner"></span> Processing Your Slideshow</h2>
+      <p>Please wait while your video is being generated. Processing time depends on the number of images and the speed of your device.</p>
+      <progress id="progressBar" value="0" max="100" style="width: 100%; display: none;"></progress>
+      <p id="progressText">Preparing your slideshow...</p>
+    </div>
+
+    <!-- Results Area -->
+    <div id="resultsArea" class="status-area" style="display: none;">
+      <h2>Your Video is Ready!</h2>
+      <button id="downloadLink">Download Video</button>
+      <video id="videoPlayer">Loading video...</video>
+      <hr>
+      <button id="createAnotherButton">Create Another Slideshow</button>
+    </div>
+
+  </div>
+
+  <!-- Hidden Render Canvas -->
+  <canvas id="renderCanvas" style="display: none;"></canvas>
+  <script src="script.js"></script>
+
+</body>
+</html>
